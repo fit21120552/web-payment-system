@@ -1,0 +1,25 @@
+<nav class="navbar  p-2 mt-2 rounded-2 p-3" style="background-color: black">
+  <div class="container">
+    
+    <nav style="--bs-breadcrumb-divider: '|';" aria-label="breadcrumb">
+      <ol class="breadcrumb d-flex m-0">
+        {{#if game}}
+         <h1 style="color: aliceblue; margin-left: 470px;">SERVER AUTH</h1>
+        {{else}}
+        {{#if isLogin}}
+        
+          <a style="margin-left: 20px;" href="/pay/login" class="btn btn-warning rounded-pill">
+          <b>Register</b></a>
+        {{else}}
+       
+         <a style="margin-left: 20px;" href="/pay/login" class="btn btn-warning rounded-pill">
+          <b>Login</b></a>
+        <a style="margin-left: 20px;" href="/pay/register" class="btn btn-warning rounded-pill">
+          <b>Register</b></a>
+        {{/if}}
+        {{/if}}
+
+      </ol>
+    </nav>
+  </div>
+</nav>

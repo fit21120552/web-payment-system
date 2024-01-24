@@ -1,0 +1,31 @@
+<div class="card" style="width: 400px; height: fit-content;">
+  <div class="card-header text-center">
+    <h2>Login</h2>
+  </div>
+  <div class="card-body needs-validation">
+    <form class="row g-3" id="loginForm" >
+      <div class="col-12">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" placeholder="Username" id="username" name="username" required value="{{username}}" />
+        <div id="us" style="color: red;">
+          
+        </div>
+      </div>
+      <div class="col-12">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" placeholder="Password" id="password" value="{{password}}" name="password" required />
+        <div id="pw" style="color: red;">
+          
+        </div>
+      </div>
+  </div>
+  <div class="col-12" style="margin-bottom: 20px;">
+    <button class="btn btn-primary" type="submit" style="margin-left: 40%;">Login</button>
+  </div>
+  <div class="col-12" style="margin-bottom: 5px;">
+    <span>Don't have an account? <a href="https://localhost:3003/pay/register" >Register </a></span>
+  </div>
+  </form>
+</div>
+</div>
+<script src="/js/login.js" type="module"></script>

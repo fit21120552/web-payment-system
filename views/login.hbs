@@ -1,0 +1,30 @@
+<div class="card" style="width: 400px; height: fit-content;">
+  <div class="card-header text-center">
+    <h2>Login</h2>
+  </div>
+  <div class="card-body needs-validation">
+    <form class="row g-3" id="loginForm" method="post" action="/pay/login">
+      <div class="col-12">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" placeholder="Username" id="username" name="username" required value="{{username}}" />
+        <div style="color: red;">
+          {{msgn}}
+        </div>
+      </div>
+      <div class="col-12">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" placeholder="Password" id="password" value="{{password}}" name="password" required />
+        <div style="color: red;">
+          {{msg}}
+        </div>
+      </div>
+  </div>
+  <div class="col-12">
+    <button class="btn btn-primary w-100" type="submit" style="margin-bottom: 10px;">Login</button>
+  </div>
+  <div class="col-12" style="margin-bottom: 5px;">
+    <span>Don't have an account? <a href="/pay/register" >Register </a></span>
+  </div>
+  </form>
+</div>
+</div>

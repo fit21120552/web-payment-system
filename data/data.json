@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "fullname": "admin1",
+      "username": "un1",
+      "password": "$2b$10$/sfWGV45QDS4zvANRfMQje2Eub8lMABEAkyCbfxhLzm66S6GK/LMC",
+      "avatar": "default.jpg"
+    },
+    {
+      "id": 2,
+      "fullname": "admin2",
+      "username": "un2",
+      "password": "$2b$10$H5RCDPcUJSz4A5ysfKNODu2LQMudsiW.x4omgA.YMIbLwuKw.6pS6",
+      "avatar": "default.jpg"
+    },
+    {
+      "id": 3,
+      "fullname": "hoai",
+      "username": "hoa",
+      "password": "$2b$10$8ljBsZAeW2g3MkNeKPMFIe.q4/vlT4gxLc2/LIKFZKKTEgfTQYSAS",
+      "avatar": "default.jpg"
+    }
+  ]
+}
