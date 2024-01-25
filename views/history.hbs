@@ -1,0 +1,18 @@
+<div class="container d-flex flex-column align-items-center">
+    {{#each data}}
+    <div class="row ">
+        <div class="card text-bg-light mb-3" style="max-width: 50rem;">
+            <div class="card-header">
+                <h5 class="card-title">Thông báo biến động</h5>
+            </div>
+            <div class="card-body">
+                <p><b>Thời gian giao dịch: {{this.time}} </b></p>
+                <p><b>Tài khoản thanh toán: {{this.account}}</b></p>
+                <p><b>Số tiền: {{#ifBig this.money 0}}<span style="color: green;">+{{this.money}}</span>{{else}}<span style="color: red;">{{this.money}}</span>{{/ifBig}}</b></p>
+                <p><b>Số dư cuối: {{this.remainder}}</b></p>
+                <p><b>Tài khoản giao dịch: {{this.otherAccount}}</b></p>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>

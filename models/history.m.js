@@ -1,7 +1,12 @@
 const historyCollection = require('../collections/collections').historyCollection;
 module.exports = {
     getAll: async () => {
-       const data = await accountcollection.findOne({username: username});
+       const data = await historyCollection.find();
        return data;
+    },
+    insertOne: async(sender,receiver,money,endS,endR,time)=>
+    {
+        const data = await historyCollection.insertMany({sender: sender,receiver: receiver,money: money,endS:endS,endR:endR,time:time});
+        return data;
     }
 }
