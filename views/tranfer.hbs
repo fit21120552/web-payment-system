@@ -1,0 +1,26 @@
+<div class="card" style="width: 400px; height: fit-content;">
+    <div class="card-header text-center">
+        <h2>Infomation receiver</h2>
+    </div>
+    <div class="card-body">
+        <form class="row g-3" method="post" action="/pay/tranfer">
+            <div class="col-12">
+                <label for="username" style="font-weight: bold;">Username</label>
+                <input type="text" class="form-control" id="username" name="username" value="{{username}}" />
+                <div style="color: red;">
+                    {{msg}}
+                </div>
+            </div>
+            <div class="col-12">
+                <label for="username" style="font-weight: bold;">How many you want to tranfer?</label>
+                <input type="text" class="form-control" id="balance" name="money" value="{{money}}" />
+                <div style="color: red;">
+                    {{msgn}}
+                </div>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary w-100" type="submit">Tranfer</button>
+            </div>
+        </form>
+    </div>
+</div>

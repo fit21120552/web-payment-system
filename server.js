@@ -58,13 +58,13 @@ app.use(session({
     saveUninitialized: true,
     cookie: { secure: false }
   }))
+
 app.use(
     cors({
         origin: `http://localhost:3001`,
         credentials: true,
     }),
 );
-
 
 app.use("/pay", authRouter);
 app.use((err, req, res, next) => {

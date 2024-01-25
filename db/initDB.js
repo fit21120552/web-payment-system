@@ -11,7 +11,7 @@ module.exports =
             //create default account receiver money from user
             const check = await accountcollection.findOne({ username: "admin" })
             if (!check) {
-                const data = { username: "admin", password: "12345" };
+                const data = { username: "admin", password: "$2a$10$xCCD108Zwg8MKO3HqDPWTOhqw8pSq0s5VL/pK5jYNtg1WlThY4rve" };
                 const receiver = await accountcollection.insertMany(data);
                 const mainAccount = await bankCollection.insertMany({ balance: 0, _id: receiver[0]._id });
             }

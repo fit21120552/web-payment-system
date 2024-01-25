@@ -3,39 +3,20 @@
         <h2>Bank account</h2>
     </div>
     <div class="card-body">
-        <form class="row g-3" method="post" action="/pay/userU">
+        <form class="row g-3" method="post" action="/pay/deposit">
             <div class="col-12">
-                <label for="username">Username</label>
+                <label for="username" style="font-weight: bold;">Username</label>
                 <input type="text" class="form-control"  id="username" name="username"
-                    value="{{username}}"  readonly />
+                    value="{{username}}" readonly />
             </div>
             <div class="col-12">
-                <label for="username">Balance</label>
+                <label for="username" style="font-weight: bold;">Balance</label>
                 <input type="text" class="form-control" id="balance" name="balance"
                     value="{{balance}}"  readonly />
             </div>
-
-
-
             <div class="col-12">
                 <button class="btn btn-primary w-100" type="submit">Nạp tiền</button>
             </div>
         </form>
     </div>
 </div>
-<script>
-    function displaySelectedImage(event, elementId) {
-        const selectedImage = document.getElementById(elementId);
-        const fileInput = event.target;
-
-        if (fileInput.files && fileInput.files[0]) {
-            const reader = new FileReader();
-
-            reader.onload = function (e) {
-                selectedImage.src = e.target.result;
-            };
-
-            reader.readAsDataURL(fileInput.files[0]);
-        }
-    }
-</script>

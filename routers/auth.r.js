@@ -1,12 +1,12 @@
 const app = require("express");
 const router = app.Router();
 const authController = require('../controllers/account.c');
-router.post("/register", authController.register)
+const bankController = require('../controllers/bank.c');
 router.post("/login", authController.login);
-
-router.get("/profile/:Id", authController.profile);
+router.post("/deposit", bankController.deposit);
+router.get("/profile", authController.profile);
 router.get("/", authController.getLogin);
-router.get("/register", authController.getRegister);
 router.get("/login", authController.getLogin);
-
+router.get("/tranfer", authController.getTranfer);
+router.post("/tranfer", bankController.Tranfering);
 module.exports = router;
