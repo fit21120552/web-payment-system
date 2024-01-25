@@ -37,7 +37,7 @@ exports.login = async (req, res, next) => {
         if (user != undefined) {
             const check = bcrypt.compareSync(password, user.password)
             if (check) {
-                res.redirect(`/pay/profile`)
+                res.redirect(`/pay`)
             }
             else {
                 res.render("login", { title: "login", username: username, password: password, msg: "Password is not correct !" })

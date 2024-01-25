@@ -43,8 +43,8 @@ exports.TranferingCart = async (req, res, next) => {
     try {
         let { total } = req.body;
         total = parseInt(total);
-        const senderID =  req.session.idUser;
-        const sender = await bankModel.getById(senderID);
+        const senderA = await accountModel.getByUserName(req.session.username);
+        const sender = await bankModel.getById(senderA._id);
         const receiver =await accountModel.getByUserName("admin");
         //update balance of sender and receiver
         //get bank account
@@ -53,7 +53,7 @@ exports.TranferingCart = async (req, res, next) => {
         {
             return res.json("Số dư không đủ để thanh toán !");
         }
-        await bankModel.UpdateBalance(senderID, sender.balance-total);
+        await bankModel.UpdateBalance(sender._id, sender.balance-total);
         await bankModel.UpdateBalance(receiveAccount._id, receiveAccount.balance+total);
         //log information of history tranfer
         return res.json("success");

@@ -10,10 +10,11 @@ const cookieparser = require('cookie-parser');
 const exphbs = require("express-handlebars");
 const port = process.env.PORT_PAYMENT;
 const authRouter = require('./routers/auth.r');
+const commonRouter = require('./routers/common.r');
 const morgan = require("morgan");
 const auth = require('./middleware/auth');
-
 const db = require('./db/initDB');
+
 const credentials = {
     key: process.env.PRIVATE_KEY,
     cert: process.env.CERTIFICATE,
@@ -69,6 +70,7 @@ app.use(
 );
 
 app.use("/pay",auth.authentication, authRouter);
+app.use(commonRouter)
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode | 500;
     res.status(statusCode).send(err.message);

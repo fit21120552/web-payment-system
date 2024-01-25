@@ -2,7 +2,7 @@ const sessionModel = require('../models/session.m');
 module.exports = {
   authentication: async (req, res, next) => {
     try {
-       const sessionID = req.sessionID;
+       const sessionID =req.headers.sessionid;
       const data = await sessionModel.GetOneSession(sessionID);
       if (data != undefined) {
         const parsedSession = JSON.parse(data.session);
