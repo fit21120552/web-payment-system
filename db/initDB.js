@@ -3,7 +3,6 @@ const userModel = mongoose.connection.collection("users");
 const accountcollection = require('../collections/collections').accountcollection;
 const bankCollection = require('../collections/collections').bankCollection;
 
-
 module.exports =
 {
     Init: async () => {

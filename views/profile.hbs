@@ -1,38 +1,24 @@
 <div class="card" style="width: 400px; height: fit-content;">
     <div class="card-header text-center">
-        <h2>Profile</h2>
+        <h2>Bank account</h2>
     </div>
     <div class="card-body">
-        <form class="row g-3" method="post" action="/pay/userU" enctype="multipart/form-data">
-            <div class="col-12">
-                <label for="fullname">Full Name</label>
-                <input type="text" class="form-control" placeholder="Enter your full name" id="name" name="fullname"
-                    value="{{fullname}}" required />
-                <input type="hidden" class="form-control"  name="ID" value="{{id}}"
-                    />
-            </div>
+        <form class="row g-3" method="post" action="/pay/userU">
             <div class="col-12">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" placeholder="Enter your username" id="username" name="username"
-                    value="{{username}}" required />
-            </div>
-
-            <div class="mb-4 d-flex justify-content-center">
-                <img id="selectedImage" src="/images/{{avatar}}" alt=" unkown account" style="width: 300px;"
-                    class="rounded-circle" />
-            </div>
-
-            <div class="d-flex justify-content-center">
-
-                <div class="btn btn-primary btn-rounded">
-
-                    <label class="form-label text-white m-1" for="customFile1">Update avatar</label>
-                    <input name="avatar" type="file" class="form-control d-none" id="customFile1"
-                        onchange="displaySelectedImage(event, 'selectedImage')" />
-                </div>
+                <input type="text" class="form-control"  id="username" name="username"
+                    value="{{username}}"  readonly />
             </div>
             <div class="col-12">
-                <button class="btn btn-primary w-100" type="submit">Update</button>
+                <label for="username">Balance</label>
+                <input type="text" class="form-control" id="balance" name="balance"
+                    value="{{balance}}"  readonly />
+            </div>
+
+
+
+            <div class="col-12">
+                <button class="btn btn-primary w-100" type="submit">Nạp tiền</button>
             </div>
         </form>
     </div>

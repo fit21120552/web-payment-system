@@ -2,6 +2,8 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const userModel = require('../models/user.m');
 const passport = require('passport');
+const accountModel = require('../models/account.m');
+const bankModel = require('../models/bank.m');
 
 exports.register = async (req, res, next) => {
     try {
@@ -27,45 +29,12 @@ exports.register = async (req, res, next) => {
         next(error);
     }
 }
-exports.login = async (req, res, next) => {
-    try {
-        const { username, password } = req.body;
-        const user = await userModel.getByUserName(username);
-
-        if (user != "null") {
-            const check = bcrypt.compareSync(password, user.password)
-            if (check) {
-                return res.json({
-                    msg: "Login success",
-                    success: true,
-                    user: user
-                })
-            }
-            else {
-                return res.json({
-                    msg: "Password is not correct !",
-                    pw: false,
-                    success: false
-
-                })
-            }
-
-        }
-        else {
-            return res.json({
-                msg: "User name is not correct !",
-                pw: true,
-                success: false
-            })
-        }
-
-    } catch (error) {
-        next(error);
-    }
-}
 exports.profile = async (req, res, next) => {
     try {
-        res.render("profile");
+        const Id = req.params.Id;
+        const user = await accountModel.getById(Id);
+        const bank = await bankModel.getById(Id);
+        res.render("profile",{isLogin: true, title: "profile", username: user.username,balance: bank.balance});
     } catch (error) {
         next(error);
     }
@@ -92,15 +61,15 @@ exports.getLoginGame = async (req, res, next) => {
     }
 };
 
-exports.login2 = async (req, res, next) => {
+exports.login = async (req, res, next) => {
     try {
         const { username, password } = req.body;
-        const user = await userModel.getByUserName(username);
+        const user = await accountModel.getByUserName(username)
 
-        if (user != "null") {
+        if (user != undefined) {
             const check = bcrypt.compareSync(password, user.password)
             if (check) {
-                res.render("profile", { isLogin: true, title: "profile", id: user.id, username: username, fullname: user.fullname, avatar: user.avatar });
+                res.redirect(`/pay/profile/${user._id}`)
             }
             else {
                 res.render("login", { title: "login", username: username, password: password, msg: "Password is not correct !" })

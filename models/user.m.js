@@ -1,7 +1,6 @@
 //write method get data from file data.json and add data to file data.json
 const fs = require('fs');
 const path = require('path');
-const filePath = path.join(__dirname, '..', "data", "data.json");
 const loadData = () => {
     const data = fs.readFileSync(filePath, "utf8");
     return JSON.parse(data);
