@@ -11,6 +11,8 @@ const exphbs = require("express-handlebars");
 const port = process.env.PORT_PAYMENT;
 const authRouter = require('./routers/auth.r');
 const morgan = require("morgan");
+const auth = require('./middleware/auth');
+
 const db = require('./db/initDB');
 const credentials = {
     key: process.env.PRIVATE_KEY,
@@ -66,7 +68,7 @@ app.use(
     }),
 );
 
-app.use("/pay", authRouter);
+app.use("/pay",auth.authentication, authRouter);
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode | 500;
     res.status(statusCode).send(err.message);

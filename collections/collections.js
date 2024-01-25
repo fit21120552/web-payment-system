@@ -21,6 +21,35 @@ const bankSchema = new mongoose.Schema({
     required: true,
   },
 });
+//create schema for history tranfer
+const hisSchema = new mongoose.Schema({
+  sender: {
+    type: String,
+    required: true,
+  },
+  receiver: {
+    type: String,
+    required: true,
+  },
+  money: {
+    type: Number,
+    required: true,
+  },
+  endS: {
+    type: Number,
+    required: true,
+  },
+  endR: {
+    type: Number,
+    required: true,
+  },
+  time:
+  {
+    type: Date,
+    required: true,
+  },
+});
 const accountcollection = new mongoose.model("accounts", userSchema);
 const bankCollection = new mongoose.model("banks",bankSchema);
-module.exports = {accountcollection,bankCollection};
+const historyCollection = new mongoose.model("histories",hisSchema);
+module.exports = {accountcollection,bankCollection,historyCollection};

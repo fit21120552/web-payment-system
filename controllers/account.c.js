@@ -32,6 +32,7 @@ exports.login = async (req, res, next) => {
         const { username, password } = req.body;
         const user = await accountModel.getByUserName(username)
         req.session.user=user;
+        req.session.isAuthenticated=true;
         req.session.cookie.maxAge = 10*60*60*1000;
         if (user != undefined) {
             const check = bcrypt.compareSync(password, user.password)

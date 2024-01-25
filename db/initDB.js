@@ -16,16 +16,17 @@ module.exports =
                 const mainAccount = await bankCollection.insertMany({ balance: 0, _id: receiver[0]._id });
             }
             //create bank account for user in main system
-            const users = await userModel.find({role:"user"});
+            const users = await userModel.find({ role: "user" });
             users.forEach(async user => {
-                const existAccount = await accountcollection.findOne({username: user.username});
+                const existAccount = await accountcollection.findOne({ username: user.username });
                 if (!existAccount) {
                     const data = { username: user.username, password: user.password };
                     const receiver = await accountcollection.insertMany(data);
                     const mainAccount = await bankCollection.insertMany({ balance: 0, _id: receiver[0]._id });
                 }
             });
-        } catch (error) {
+        }
+        catch (error) {
             throw error
         }
 
