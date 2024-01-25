@@ -1,4 +1,5 @@
 require("dotenv").config();
+const mongoose = require('mongoose');
 const express = require('express');
 var cors = require('cors');
 const path = require("path");
@@ -9,12 +10,13 @@ const cookieparser = require('cookie-parser');
 const exphbs = require("express-handlebars");
 const port = process.env.PORT_PAYMENT;
 const authRouter = require('./routers/auth.r');
-
+const morgan = require("morgan");
+const db = require('./db/initDB');
 const credentials = {
     key: process.env.PRIVATE_KEY,
     cert: process.env.CERTIFICATE,
 };
-
+app.use(morgan("dev"));
 app.engine(
     "hbs",
     exphbs.engine({
@@ -27,7 +29,24 @@ app.engine(
 
 app.set("views", __dirname + "/views");
 app.set("view engine", "hbs");
-
+// Connect to database
+const DB = process.env.DATABASE.replace(
+    '<PASSWORD>',
+    process.env.DATABASE_PASSWORD
+  );
+  
+  // Create a MongoClient with a MongoClientOptions object to set the Stable API version
+  mongoose.connect(DB, {
+//       useNewUrlParser: true,
+   //useCreateIndex: true,
+//     //   useFindAndModify: false,
+//       useUnifiedTopology: true,
+  })
+    .then(() => {
+      console.log('connect to database successfully');
+    });
+//init database
+db.Init();
 app.use(express.static(__dirname + "/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
