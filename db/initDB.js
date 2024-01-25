@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const userModel = mongoose.connection.collection("users");
-const accountcollection = require('../collections/collections').accountcollection;
 const bankCollection = require('../collections/collections').bankCollection;
 
 module.exports =
@@ -9,20 +8,19 @@ module.exports =
 
         try {
             //create default account receiver money from user
-            const check = await accountcollection.findOne({ username: "admin" })
+            const check = await userModel.findOne({ username: "admin" })
             if (!check) {
-                const data = { username: "admin", password: "$2a$10$xCCD108Zwg8MKO3HqDPWTOhqw8pSq0s5VL/pK5jYNtg1WlThY4rve" };
-                const receiver = await accountcollection.insertMany(data);
-                const mainAccount = await bankCollection.insertMany({ balance: 0, _id: receiver[0]._id });
+                const data = { username: "admin", password: "$2a$10$xCCD108Zwg8MKO3HqDPWTOhqw8pSq0s5VL/pK5jYNtg1WlThY4rve",role:"admin" };
+                const receiver = await userModel.insertOne(data);
+                const mainAccount = await bankCollection.insertMany({ balance: 0, _id: receiver.insertedId });
             }
             //create bank account for user in main system
             const users = await userModel.find({ role: "user" });
             users.forEach(async user => {
-                const existAccount = await accountcollection.findOne({ username: user.username });
+                //check exists account
+                const existAccount = await bankCollection.findOne({ _id: user._id });
                 if (!existAccount) {
-                    const data = { username: user.username, password: user.password };
-                    const receiver = await accountcollection.insertMany(data);
-                    const mainAccount = await bankCollection.insertMany({ balance: 0, _id: receiver[0]._id });
+                    await bankCollection.insertMany({ balance: 0, _id: user._id });
                 }
             });
         }

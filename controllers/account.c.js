@@ -3,10 +3,10 @@ const accountModel = require('../models/account.m');
 const bankModel = require('../models/bank.m');
 exports.profile = async (req, res, next) => {
     try {
-        const Id = req.session.user._id;
-        const user = await accountModel.getById(Id);
-        const bank = await bankModel.getById(Id);
-        res.render("profile",{isLogin: true, title: "profile", username: user.username,balance: bank.balance});
+      
+        const user = await accountModel.getByUserName(req.session.user.username);
+        const bank = await bankModel.getById(user._id);
+        res.render("profile",{isLogin: true, title: "Profile", username: user.username,balance: bank.balance});
     } catch (error) {
         next(error);
     }
@@ -14,14 +14,14 @@ exports.profile = async (req, res, next) => {
 
 exports.getLogin = async (req, res, next) => {
     try {
-        res.render("login", { title: "login" });
+        res.render("login", { title: "Login" });
     } catch (error) {
         next(error);
     }
 };
 exports.getTranfer = async (req, res, next) => {
     try {
-        res.render("tranfer", {isLogin:true, title: "login" });
+        res.render("tranfer", {isLogin:true, title: "Tranfer" });
     } catch (error) {
         next(error);
     }
@@ -40,11 +40,11 @@ exports.login = async (req, res, next) => {
                 res.redirect(`/pay`)
             }
             else {
-                res.render("login", { title: "login", username: username, password: password, msg: "Password is not correct !" })
+                res.render("login", { title: "Login", username: username, password: password, msg: "Password is not correct !" })
             }
         }
         else {
-            res.render("login", { title: "login", username: username, password: password, msgn: "User name is not correct !" })
+            res.render("login", { title: "Login", username: username, password: password, msgn: "User name is not correct !" })
         }
 
     } catch (error) {

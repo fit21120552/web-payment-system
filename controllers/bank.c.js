@@ -7,8 +7,9 @@ exports.deposit = async (req, res, next) => {
         balance = parseInt(balance);
         balance = balance + 1000000;
         const user = await accountModel.getByUserName(username);
+        console.log(user)
         await bankModel.UpdateBalance(user._id, balance);
-        res.redirect(`/pay/profile/${user._id}`)
+        res.redirect(`/pay/profile`)
     } catch (error) {
         next(error);
     }

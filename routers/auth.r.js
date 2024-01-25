@@ -10,5 +10,5 @@ router.get("/", authController.profile);
 router.get("/login", authController.getLogin);
 router.get("/tranfer", authController.getTranfer);
 router.post("/tranfer", bankController.TranferingCart);
-
+router.post("/tranferr", bankController.Tranfering);
 module.exports = router;
