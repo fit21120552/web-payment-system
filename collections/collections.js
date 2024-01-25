@@ -32,7 +32,7 @@ const hisSchema = new mongoose.Schema({
   },
   time:
   {
-    type: Date,
+    type: String,
     required: true,
   },
 });

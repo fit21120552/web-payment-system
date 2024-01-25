@@ -38,7 +38,18 @@ exports.Tranfering = async (req, res, next) => {
         await bankModel.UpdateBalance(receiveAccount._id, receiveAccount.balance + money);
         //log information of history tranfer
         const now = new Date();
-        await historyModel.insertOne(sender.username, username, money, sendAccount.balance - money, receiveAccount.balance + money, now)
+        const options = {
+            weekday: 'short',
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false,
+          };
+        const formattedDate = new Intl.DateTimeFormat('en-US', options).format(now);
+        await historyModel.insertOne(sender.username, username, money, sendAccount.balance - money, receiveAccount.balance + money, formattedDate)
         return res.redirect(`/pay/profile`)
     } catch (error) {
         next(error);
@@ -61,7 +72,18 @@ exports.TranferingCart = async (req, res, next) => {
         await bankModel.UpdateBalance(receiveAccount._id, receiveAccount.balance + total);
         //log information of history tranfer
         const now = new Date();
-        await historyModel.insertOne(senderA.username, "admin", total, sender.balance - total, receiveAccount.balance + total, now)
+        const options = {
+            weekday: 'short',
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false,
+          };
+        const formattedDate = new Intl.DateTimeFormat('en-US', options).format(now);
+        await historyModel.insertOne(senderA.username, "admin", total, sender.balance - total, receiveAccount.balance + total, formattedDate)
         return res.json("success");
     } catch (error) {
         next(error);
