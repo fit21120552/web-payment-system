@@ -13,5 +13,9 @@ module.exports = {
                 ["balance"]: newBalance
             },
         })
-   }
+   },
+   insertOne: async (Id) => {
+    const data = await bankCollection.insertMany({_id: Id,balance:0});
+    return data;
+ },
 }

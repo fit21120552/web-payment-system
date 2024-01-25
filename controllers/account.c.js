@@ -12,6 +12,17 @@ exports.profile = async (req, res, next) => {
     }
 }
 
+exports.register = async (req, res, next) => {
+    try {
+        const {username }=req.body;
+        const user =await accountModel.getByUserName(username)
+        //create bank account
+        const data = await bankModel.insertOne(user._id);
+        return res.json("success");
+    } catch (error) {
+        next(error);
+    }
+};
 exports.getLogin = async (req, res, next) => {
     try {
         res.render("login", { title: "Login" });
