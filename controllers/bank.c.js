@@ -27,16 +27,16 @@ exports.Tranfering = async (req, res, next) => {
         const receiver = await accountModel.getByUserName(username);
         //check exist receiver
         if (!receiver) {
-            return res.render("tranfer", { isLogin: true, title: "tranfer", username: username, money: money, msg: "Username is not exist !" })
+            return res.render("tranfer", { isLogin: true, title: "tranfer", username: username, money: money,message:message, msg: "Username is not exist !" })
         }
         //check not send to yourself
         if (username == sender.username) {
-            return res.render("tranfer", { isLogin: true, title: "tranfer", username: username, money: money, msg: "You can't send to yourself!" })
+            return res.render("tranfer", { isLogin: true, title: "tranfer", username: username, money: money,message:message, msg: "You can't send to yourself!" })
 
         }
         //check valie money
         if (money <= 0) {
-            return res.render("tranfer", { isLogin: true, title: "tranfer", username: username, money: money, msgn: "Invalid money !" })
+            return res.render("tranfer", { isLogin: true, title: "tranfer", username: username, money: money,message:message, msgn: "Invalid money !" })
         }
         //update balance of sender and receiver
         if (message == '') { message = `${sender.username} send to ${receiver.username}` }
@@ -44,7 +44,7 @@ exports.Tranfering = async (req, res, next) => {
         const sendAccount = await bankModel.getById(sender._id);
         const receiveAccount = await bankModel.getById(receiver._id);
         if (sendAccount.balance - money < 0) {
-            return res.render("tranfer", { isLogin: true, title: "tranfer", username: username, money: money, msgn: "Your balance is't enough!" })
+            return res.render("tranfer", { isLogin: true, title: "tranfer", username: username, money: money,message:message, msgn: "Your balance is't enough!" })
         }
         await bankModel.UpdateBalance(sender._id, sendAccount.balance - money);
         await bankModel.UpdateBalance(receiveAccount._id, receiveAccount.balance + money);
@@ -63,7 +63,7 @@ exports.Tranfering = async (req, res, next) => {
 
         const formattedDate = new Intl.DateTimeFormat('en-GB', options).format(now);
         await historyModel.insertOne(sender.username, username, money, sendAccount.balance - money, receiveAccount.balance + money, formattedDate, message)
-        return res.redirect(`/pay/profile`)
+        return res.render("profile",{tranfer:true, isLogin: true, title: "Profile", username: sender.username,balance:(sendAccount.balance - money).toLocaleString('en-US')});
     } catch (error) {
         next(error);
     }
