@@ -9,6 +9,7 @@ module.exports = {
     return accum;
   },
   ifBig: function (arg1, arg2, options) {
+    arg1 = parseFloat(arg1.replace(/,/g, ''));
     return arg1 >= arg2 ? options.fn(this) : options.inverse(this);
   },
 };

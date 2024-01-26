@@ -50,7 +50,8 @@ exports.Tranfering = async (req, res, next) => {
             second: '2-digit',
             hour12: false,
           };
-        const formattedDate = new Intl.DateTimeFormat('en-US', options).format(now);
+          
+          const formattedDate = new Intl.DateTimeFormat('en-GB', options).format(now);
         await historyModel.insertOne(sender.username, username, money, sendAccount.balance - money, receiveAccount.balance + money, formattedDate)
         return res.redirect(`/pay/profile`)
     } catch (error) {
@@ -84,7 +85,7 @@ exports.TranferingCart = async (req, res, next) => {
             second: '2-digit',
             hour12: false,
           };
-        const formattedDate = new Intl.DateTimeFormat('en-US', options).format(now);
+          const formattedDate = new Intl.DateTimeFormat('en-GB', options).format(now);
         await historyModel.insertOne(senderA.username, "admin", total, sender.balance - total, receiveAccount.balance + total, formattedDate)
         return res.json("success");
     } catch (error) {
@@ -100,10 +101,10 @@ exports.History = async (req, res, next) => {
         data.forEach(h => {
             //check exists account
             if (h.sender == username) {
-                history.push({time: h.time,account: h.sender,money: -1*h.money,remainder: h.endS,otherAccount: h.receiver})
+                history.push({time: h.time,account: h.sender,money: "-"+h.money.toLocaleString('en-US'),remainder: h.endS.toLocaleString('en-US'),otherAccount: h.receiver})
             }
             if (h.receiver == username) {
-                history.push({time: h.time,account: h.receiver,money: h.money,remainder: h.endR,otherAccount: h.sender})
+                history.push({time: h.time,account: h.receiver,money: h.money.toLocaleString('en-US'),remainder: h.endR.toLocaleString('en-US'),otherAccount: h.sender})
             }
 
         });
