@@ -1,22 +1,98 @@
+<style>
+
+    /* The popup form - hidden by default */
+    .form-popup {
+        border-radius: 5px;
+        display: none;
+        position: fixed;
+        top: 10;
+        bottom: 220px;
+        right: 150px;
+        border: 3px solid #f1f1f1;
+        z-index: 9;
+    }
+
+    /* Add styles to the form container */
+    .form-container {
+        max-width: 300px;
+        padding: 10px;
+        background-color: white;
+    }
+
+    /* Full-width input fields */
+    .form-container input[type=number],
+    .form-container input[type=password] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        border: none;
+        background: #f1f1f1;
+    }
+
+    /* When the inputs get focus, do something */
+    .form-container input[type=number]:focus,
+    .form-container input[type=password]:focus {
+        background-color: #ddd;
+        outline: none;
+    }
+
+    /* Set a style for the submit/login button */
+    .form-container .btn {
+        background-color: #04AA6D;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom: 10px;
+        opacity: 0.8;
+    }
+
+    /* Add a red background color to the cancel button */
+    .form-container .cancel {
+        background-color: red;
+    }
+
+    /* Add some hover effects to buttons */
+    .form-container .btn:hover,
+    .open-button:hover {
+        opacity: 1;
+    }
+</style>
 <div class="card" style="width: 400px; height: fit-content;">
     <div class="card-header text-center">
         <h2>Bank account</h2>
     </div>
-    <div class="card-body">
-        <form class="row g-3" method="post" action="/pay/deposit">
+    <div class="card-body" id="myform">
+        <form class="row g-3">
             <div class="col-12">
                 <label for="username" style="font-weight: bold;">Username</label>
-                <input type="text" class="form-control"  id="username" name="username"
-                    value="{{username}}" readonly />
+                <input type="text" class="form-control" id="username" name="username" value="{{username}}" readonly />
             </div>
             <div class="col-12">
                 <label for="username" style="font-weight: bold;">Balance</label>
-                <input type="text" class="form-control" id="balance" name="balance"
-                    value="{{balance}}"  readonly />
-            </div>
-            <div class="col-12">
-                <button class="btn btn-primary w-100" type="submit">Nạp tiền</button>
+                <input type="text" class="form-control" id="balance" name="balance" value="{{balance}}" readonly />
             </div>
         </form>
+        <div class="col-12">
+            <button class="btn btn-primary w-100" style="margin-top: 18px; height: 48px;" onclick="openForm()" type="submit">Deposit</button>
+        </div>
+        <div class="form-popup" id="myForm">
+            <form method="post" action="/pay/deposit" class="form-container">
+                <h1>Deposit cash</h1>
+                <label for="money"><b>How many do you want to deposit ?</b></label>
+                <input type="number" placeholder="Enter your number" name="money" required>
+                <button type="submit" class="btn">Confirm</button>
+                <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+            </form>
+        </div>
     </div>
 </div>
+<script>
+    function openForm() {
+        document.getElementById("myForm").style.display = "block";
+    }
+    function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+    }
+</script>

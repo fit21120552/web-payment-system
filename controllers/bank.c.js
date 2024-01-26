@@ -5,11 +5,13 @@ const hbsHelper =require('../helper/hbs_helper');
 //Deposit for one account
 exports.deposit = async (req, res, next) => {
     try {
-        let { username, balance } = req.body;
-        balance = parseInt(balance);
-        balance = balance + 1000000;
+        const {money}=req.body;
+        const username = req.session.user.username;
         const user = await accountModel.getByUserName(username);
-        console.log(user)
+        const bankAccount = await bankModel.getById(user._id);
+        let balance = bankAccount.balance;
+        balance = parseInt(balance);
+        balance = balance + parseInt(money);
         await bankModel.UpdateBalance(user._id, balance);
         res.redirect(`/pay/profile`)
     } catch (error) {
