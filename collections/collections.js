@@ -35,6 +35,11 @@ const hisSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  message:
+  {
+    type: String,
+    required: true,
+  },
 });
 const bankCollection = new mongoose.model("banks",bankSchema);
 const historyCollection = new mongoose.model("histories",hisSchema);

@@ -1,11 +1,11 @@
 const accountModel = require('../models/account.m');
 const bankModel = require('../models/bank.m');
 const historyModel = require('../models/history.m');
-const hbsHelper =require('../helper/hbs_helper');
+const hbsHelper = require('../helper/hbs_helper');
 //Deposit for one account
 exports.deposit = async (req, res, next) => {
     try {
-        const {money}=req.body;
+        const { money } = req.body;
         const username = req.session.user.username;
         const user = await accountModel.getByUserName(username);
         const bankAccount = await bankModel.getById(user._id);
@@ -20,22 +20,32 @@ exports.deposit = async (req, res, next) => {
 }
 exports.Tranfering = async (req, res, next) => {
     try {
-        let { username, money } = req.body;
+        let { username, money, message } = req.body;
+
         money = parseInt(money);
         const sender = req.session.user;
         const receiver = await accountModel.getByUserName(username);
         //check exist receiver
         if (!receiver) {
-            res.render("tranfer", { isLogin: true, title: "tranfer", username: username, money: money, msg: "Username is not exist !" })
+            return res.render("tranfer", { isLogin: true, title: "tranfer", username: username, money: money, msg: "Username is not exist !" })
+        }
+        //check not send to yourself
+        if (username == sender.username) {
+            return res.render("tranfer", { isLogin: true, title: "tranfer", username: username, money: money, msg: "You can't send to yourself!" })
+
         }
         //check valie money
         if (money <= 0) {
-            res.render("tranfer", { isLogin: true, title: "tranfer", username: username, money: money, msgn: "Invalid money !" })
+            return res.render("tranfer", { isLogin: true, title: "tranfer", username: username, money: money, msgn: "Invalid money !" })
         }
         //update balance of sender and receiver
+        if (message == '') { message = `${sender.username} send to ${receiver.username}` }
         //get bank account
         const sendAccount = await bankModel.getById(sender._id);
         const receiveAccount = await bankModel.getById(receiver._id);
+        if (sendAccount.balance - money < 0) {
+            return res.render("tranfer", { isLogin: true, title: "tranfer", username: username, money: money, msgn: "Your balance is't enough!" })
+        }
         await bankModel.UpdateBalance(sender._id, sendAccount.balance - money);
         await bankModel.UpdateBalance(receiveAccount._id, receiveAccount.balance + money);
         //log information of history tranfer
@@ -49,10 +59,10 @@ exports.Tranfering = async (req, res, next) => {
             minute: '2-digit',
             second: '2-digit',
             hour12: false,
-          };
-          
-          const formattedDate = new Intl.DateTimeFormat('en-GB', options).format(now);
-        await historyModel.insertOne(sender.username, username, money, sendAccount.balance - money, receiveAccount.balance + money, formattedDate)
+        };
+
+        const formattedDate = new Intl.DateTimeFormat('en-GB', options).format(now);
+        await historyModel.insertOne(sender.username, username, money, sendAccount.balance - money, receiveAccount.balance + money, formattedDate, message)
         return res.redirect(`/pay/profile`)
     } catch (error) {
         next(error);
@@ -84,8 +94,8 @@ exports.TranferingCart = async (req, res, next) => {
             minute: '2-digit',
             second: '2-digit',
             hour12: false,
-          };
-          const formattedDate = new Intl.DateTimeFormat('en-GB', options).format(now);
+        };
+        const formattedDate = new Intl.DateTimeFormat('en-GB', options).format(now);
         await historyModel.insertOne(senderA.username, "admin", total, sender.balance - total, receiveAccount.balance + total, formattedDate)
         return res.json("success");
     } catch (error) {
@@ -94,21 +104,21 @@ exports.TranferingCart = async (req, res, next) => {
 };
 exports.History = async (req, res, next) => {
     try {
-        
+
         const username = req.session.user.username;
         const data = await historyModel.getAll();
-        let history=[];
+        let history = [];
         data.forEach(h => {
             //check exists account
             if (h.sender == username) {
-                history.push({time: h.time,account: h.sender,money: "-"+h.money.toLocaleString('en-US'),remainder: h.endS.toLocaleString('en-US'),otherAccount: h.receiver})
+                history.push({ time: h.time, account: h.sender, money: "-" + h.money.toLocaleString('en-US'), remainder: h.endS.toLocaleString('en-US'), otherAccount: h.receiver, message: h.message })
             }
             if (h.receiver == username) {
-                history.push({time: h.time,account: h.receiver,money: h.money.toLocaleString('en-US'),remainder: h.endR.toLocaleString('en-US'),otherAccount: h.sender})
+                history.push({ time: h.time, account: h.receiver, money: h.money.toLocaleString('en-US'), remainder: h.endR.toLocaleString('en-US'), otherAccount: h.sender, message: h.message })
             }
 
         });
-         res.render("history", {  helpers: hbsHelper, isLogin: true, title: "History",data: history})
+        res.render("history", { helpers: hbsHelper, isLogin: true, title: "History", data: history })
     } catch (error) {
         next(error);
     }

@@ -6,7 +6,7 @@ exports.profile = async (req, res, next) => {
       
         const user = await accountModel.getByUserName(req.session.user.username);
         const bank = await bankModel.getById(user._id);
-        res.render("profile",{isLogin: true, title: "Profile", username: user.username,balance: bank.balance});
+        res.render("profile",{isLogin: true, title: "Profile", username: user.username,balance: bank.balance.toLocaleString('en-US')});
     } catch (error) {
         next(error);
     }

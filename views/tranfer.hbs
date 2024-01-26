@@ -12,14 +12,23 @@
                 </div>
             </div>
             <div class="col-12">
-                <label for="username" style="font-weight: bold;">How many do you want to tranfer?</label>
-                <input type="text" class="form-control" id="balance" name="money" value="{{money}}" />
+                <label for="money" style="font-weight: bold;">How many do you want to tranfer?</label>
+                <input type="number" class="form-control" id="balance" name="money" value="{{money}}"
+                     />
+                <div style="color: red;">
+                    {{msgn}}
+                </div>
+            </div>
+             <div class="col-12">
+                <label for="message" style="font-weight: bold;">Message</label>
+                <textarea name="message" cols="40" rows="5"></textarea>
                 <div style="color: red;">
                     {{msgn}}
                 </div>
             </div>
             <div class="col-12">
-                <button class="btn btn-primary w-100" style="margin-top: 18px; height: 48px;" type="submit">Tranfer</button>
+                <button class="btn btn-primary w-100" style="margin-top: 18px; height: 48px;"
+                    type="submit">Tranfer</button>
             </div>
         </form>
     </div>
