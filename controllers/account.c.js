@@ -16,7 +16,8 @@ exports.register = async (req, res, next) => {
     try {
         const { username } = req.body;
         const user = await accountModel.getByUserName(username)
-        if (!user) {//create bank account
+        const account = await bankModel.getById(user._id)
+        if (!account) {//create bank account
             const data = await bankModel.insertOne(user._id);
         }
         return res.json("success");
