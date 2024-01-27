@@ -70,7 +70,6 @@ exports.Tranfering = async (req, res, next) => {
 };
 exports.TranferingCart = async (req, res, next) => {
     try {
-        console.log(req.session)
         let { total,orderId } = req.body;
         total = parseInt(total);
         const senderA = await accountModel.getByUserName(req.session.username);
