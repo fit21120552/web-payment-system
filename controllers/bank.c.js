@@ -70,7 +70,8 @@ exports.Tranfering = async (req, res, next) => {
 };
 exports.TranferingCart = async (req, res, next) => {
     try {
-        let { total } = req.body;
+        console.log(req.session)
+        let { total,orderId } = req.body;
         total = parseInt(total);
         const senderA = await accountModel.getByUserName(req.session.username);
         const sender = await bankModel.getById(senderA._id);
@@ -95,8 +96,9 @@ exports.TranferingCart = async (req, res, next) => {
             second: '2-digit',
             hour12: false,
         };
+        const message = `${req.session.username} check out for order ${orderId}`
         const formattedDate = new Intl.DateTimeFormat('en-GB', options).format(now);
-        await historyModel.insertOne(senderA.username, "admin", total, sender.balance - total, receiveAccount.balance + total, formattedDate)
+        await historyModel.insertOne(senderA.username, "admin", total, sender.balance - total, receiveAccount.balance + total, formattedDate,message)
         return res.json("success");
     } catch (error) {
         next(error);
@@ -104,7 +106,6 @@ exports.TranferingCart = async (req, res, next) => {
 };
 exports.History = async (req, res, next) => {
     try {
-
         const username = req.session.user.username;
         const data = await historyModel.getAll();
         let history = [];
