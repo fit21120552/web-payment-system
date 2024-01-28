@@ -32,6 +32,14 @@ exports.getLogin = async (req, res, next) => {
         next(error);
     }
 };
+exports.getLogout = async (req, res, next) => {
+    try {
+        req.session.destroy();
+        return res.redirect("/login")
+    } catch (error) {
+        next(error);
+    }
+};
 exports.getTranfer = async (req, res, next) => {
     try {
         res.render("tranfer", { isLogin: true, title: "Tranfer" });
@@ -50,7 +58,7 @@ exports.login = async (req, res, next) => {
         if (user != undefined) {
             const check = bcrypt.compareSync(password, user.password)
             if (check) {
-                res.redirect(`/pay`)
+                res.redirect(`/pay/profile`)
             }
             else {
                 res.render("login", { title: "Login", username: username, password: password, msg: "Password is not correct !" })
