@@ -16,7 +16,7 @@ module.exports = {
         return next();
       }
       else {
-        return res.redirect("/");
+        return res.json("Authentication failed !");
       }
     } catch (error) {
       next(error);
